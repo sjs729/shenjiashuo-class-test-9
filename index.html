@@ -5,7 +5,7 @@
   建立时间：2026-11-02
   使用模型：DeepSeek-V4.1-Flash
   功能名称：旅游新闻选项卡
-  简介：还原课堂测试第 9 题的新闻模块，三个栏目「最新投诉 / 官方回应 / 追踪调查」通过选项卡切换，默认显示最新投诉。
+  简介：按课堂测试截图 1:1 还原新闻选项卡，三个栏目「最新投诉 / 官方回应 / 追踪调查」切换，默认显示最新投诉。
   命名规范：所有 CSS 类名、id、JS 变量均以姓名首字母 sjs_ 开头；JavaScript 使用外部文件 js/news-tab.js。
 -->
 <html lang="zh-CN">
@@ -13,26 +13,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#f4f1ea">
+    <meta name="theme-color" content="#ffffff">
     <link rel="icon"
         href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23e60012'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='25' font-weight='700' fill='%23ffffff' text-anchor='middle'%3ESJS%3C/text%3E%3C/svg%3E">
-    <title>申家硕 · 旅游新闻选项卡 | 课堂实践 09</title>
-    <meta name="description" content="申家硕（学号 24001011009）高级网页设计课堂实践 9：旅游新闻三栏选项卡，含个人信息与 GitHub 源码入口。">
+    <title>最新投诉 · 新闻选项卡 | 申家硕 24001011009</title>
+    <meta name="description" content="申家硕（学号 24001011009）高级网页设计课堂实践 9：旅游新闻三栏选项卡。">
     <style>
         :root {
-            --sjs_ink: #151515;
-            --sjs_muted: #6b655b;
+            --sjs_text: #000000;
             --sjs_line: #222222;
             --sjs_red: #e60012;
             --sjs_blue: #1a45c8;
-            --sjs_paper: #ffffff;
-            --sjs_bg: #f4f1ea;
-            --sjs_soft: #faf8f3;
-            --sjs_border: #ded6c7;
-            --sjs_green: #1b7a3a;
             --sjs_serif: "SimSun", "Songti SC", "STSong", "宋体", serif;
-            --sjs_sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-            --sjs_mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            --sjs_sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
         }
 
         * {
@@ -42,309 +35,16 @@
         }
 
         html {
-            background: var(--sjs_bg);
+            background: #ffffff;
         }
 
         body {
             min-height: 100vh;
-            padding: clamp(18px, 4vw, 44px) clamp(12px, 3vw, 24px);
-            background:
-                radial-gradient(circle at 12% 8%, rgba(230, 0, 18, .055), transparent 28%),
-                radial-gradient(circle at 88% 0%, rgba(26, 69, 200, .055), transparent 30%),
-                var(--sjs_bg);
-            color: var(--sjs_ink);
-            font-family: var(--sjs_sans);
-            -webkit-font-smoothing: antialiased;
-            text-rendering: optimizeLegibility;
-        }
-
-        a {
-            color: inherit;
-        }
-
-        .sjs_page {
-            width: 100%;
-            max-width: 860px;
-            margin: 0 auto;
-        }
-
-        /* 个人信息卡 */
-        .sjs_profile {
-            position: relative;
-            overflow: hidden;
-            padding: clamp(26px, 4.4vw, 42px);
-            background: var(--sjs_paper);
-            border: 1px solid var(--sjs_border);
-            box-shadow: 0 18px 50px rgba(48, 39, 24, .08);
-        }
-
-        .sjs_profile::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--sjs_red) 0 42%, var(--sjs_blue) 42% 100%);
-        }
-
-        .sjs_profile_head {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 28px;
-        }
-
-        .sjs_profile_copy {
-            max-width: 600px;
-        }
-
-        .sjs_eyebrow {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 14px;
-            color: var(--sjs_red);
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: .16em;
-            line-height: 1.4;
-        }
-
-        .sjs_eyebrow_dot {
-            display: inline-block;
-            width: 6px;
-            height: 6px;
-            background: var(--sjs_red);
-            border-radius: 50%;
-        }
-
-        .sjs_title {
+            padding: clamp(18px, 4vw, 40px) clamp(14px, 3vw, 24px) 24px;
+            background: #ffffff;
+            color: var(--sjs_text);
             font-family: var(--sjs_serif);
-            font-size: clamp(32px, 5.2vw, 46px);
-            font-weight: 700;
-            letter-spacing: .04em;
-            line-height: 1.12;
-        }
-
-        .sjs_intro {
-            max-width: 54ch;
-            margin-top: 14px;
-            color: var(--sjs_muted);
-            font-size: 13.5px;
-            line-height: 1.85;
-        }
-
-        .sjs_stamp {
-            flex: 0 0 auto;
-            width: 116px;
-            margin-top: 3px;
-            padding: 13px 10px 12px;
-            background: var(--sjs_soft);
-            border: 1px solid #d8d0c0;
-            text-align: center;
-            transform: rotate(2deg);
-        }
-
-        .sjs_stamp_initials {
-            display: block;
-            color: var(--sjs_red);
-            font-family: Georgia, "Times New Roman", serif;
-            font-size: 25px;
-            letter-spacing: .16em;
-            line-height: 1;
-        }
-
-        .sjs_stamp_line {
-            display: block;
-            width: 24px;
-            height: 1px;
-            margin: 8px auto 7px;
-            background: var(--sjs_ink);
-        }
-
-        .sjs_stamp_no {
-            display: block;
-            color: var(--sjs_muted);
-            font-family: var(--sjs_mono);
-            font-size: 9px;
-            letter-spacing: .03em;
-            line-height: 1.5;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .sjs_meta {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 16px 24px;
-            margin-top: 28px;
-            padding: 18px 0;
-            border-top: 1px solid var(--sjs_border);
-            border-bottom: 1px solid var(--sjs_border);
-        }
-
-        .sjs_meta_item {
-            min-width: 0;
-        }
-
-        .sjs_meta_label {
-            color: var(--sjs_muted);
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: .14em;
-            line-height: 1.4;
-        }
-
-        .sjs_meta_value {
-            margin-top: 4px;
-            color: var(--sjs_ink);
-            font-size: 15px;
-            font-weight: 700;
-            line-height: 1.5;
-            overflow-wrap: anywhere;
-        }
-
-        .sjs_actions {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .sjs_links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .sjs_link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 7px 13px;
-            background: var(--sjs_paper);
-            border: 1px solid #cfc7b8;
-            color: var(--sjs_ink);
-            font-size: 12px;
-            font-weight: 700;
-            line-height: 1.2;
-            text-decoration: none;
-            transition: color .18s ease, background-color .18s ease, border-color .18s ease;
-        }
-
-        .sjs_link:hover {
-            color: var(--sjs_red);
-            border-color: var(--sjs_red);
-            background: #fff7f7;
-        }
-
-        .sjs_link:focus-visible,
-        .sjs_footer_link:focus-visible {
-            outline: 2px solid var(--sjs_red);
-            outline-offset: 2px;
-        }
-
-        .sjs_link_primary {
-            background: var(--sjs_ink);
-            border-color: var(--sjs_ink);
-            color: #ffffff;
-        }
-
-        .sjs_link_primary:hover {
-            background: var(--sjs_red);
-            border-color: var(--sjs_red);
-            color: #ffffff;
-        }
-
-        .sjs_link_arrow {
-            font-size: 13px;
-            line-height: 1;
-        }
-
-        .sjs_rules {
-            display: grid;
-            gap: 7px;
-            margin-top: 16px;
-            list-style: none;
-        }
-
-        .sjs_rule {
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
-            color: #5f5a50;
-            font-size: 12.5px;
-            line-height: 1.7;
-        }
-
-        .sjs_check {
-            display: inline-flex;
-            flex: 0 0 auto;
-            align-items: center;
-            justify-content: center;
-            width: 16px;
-            height: 16px;
-            margin-top: 1px;
-            background: #edf6ef;
-            border: 1px solid #c9e5d0;
-            border-radius: 50%;
-            color: var(--sjs_green);
-            font-size: 10px;
-            font-weight: 700;
-        }
-
-        .sjs_code {
-            padding: 1px 5px;
-            background: #f1ece1;
-            border: 1px solid #e4dccd;
-            border-radius: 2px;
-            color: #8b0010;
-            font-family: var(--sjs_mono);
-            font-size: .94em;
-            white-space: nowrap;
-        }
-
-        /* 新闻演示区 */
-        .sjs_work {
-            margin-top: 16px;
-            padding: clamp(20px, 3.4vw, 30px);
-            background: var(--sjs_paper);
-            border: 1px solid var(--sjs_border);
-            box-shadow: 0 14px 40px rgba(48, 39, 24, .055);
-        }
-
-        .sjs_work_head {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-            gap: 16px;
-            margin-bottom: 22px;
-            padding-bottom: 14px;
-            border-bottom: 1px solid #ece6da;
-        }
-
-        .sjs_work_kicker {
-            margin-bottom: 4px;
-            color: var(--sjs_red);
-            font-size: 9.5px;
-            font-weight: 700;
-            letter-spacing: .18em;
-            line-height: 1.4;
-        }
-
-        .sjs_work_title {
-            font-size: 18px;
-            font-weight: 700;
-            letter-spacing: .03em;
-            line-height: 1.4;
-        }
-
-        .sjs_work_hint {
-            color: var(--sjs_muted);
-            font-size: 11.5px;
-            line-height: 1.6;
-            text-align: right;
+            -webkit-font-smoothing: antialiased;
         }
 
         .sjs_news {
@@ -372,8 +72,8 @@
             padding: 7px 18px 9px;
             border: 1px solid transparent;
             border-bottom: 0;
-            background: var(--sjs_paper);
-            color: var(--sjs_ink);
+            background: #ffffff;
+            color: var(--sjs_text);
             font-family: inherit;
             font-size: 17px;
             font-weight: 700;
@@ -387,7 +87,7 @@
         /* 选中项：红色边框，底部盖住横向基线，形成开口的框 */
         .sjs_tab.sjs_is_active {
             border-color: var(--sjs_red);
-            border-bottom: 1px solid var(--sjs_paper);
+            border-bottom: 1px solid #ffffff;
             margin-bottom: -1px;
         }
 
@@ -418,7 +118,7 @@
             align-items: flex-start;
             gap: 9px;
             padding: 3px 0;
-            color: var(--sjs_ink);
+            color: var(--sjs_text);
             font-size: 16px;
             font-weight: 700;
             line-height: 1.85;
@@ -433,93 +133,31 @@
             background: var(--sjs_blue);
         }
 
-        /* 页脚 */
+        /* 仅用于交作业识别的底部信息，不影响新闻模块还原 */
         .sjs_footer {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 6px 20px;
-            padding: 18px 4px 0;
-            color: var(--sjs_muted);
-            font-size: 11.5px;
-            line-height: 1.7;
+            max-width: 560px;
+            margin: 18px auto 0;
+            color: #999999;
+            font-family: var(--sjs_sans);
+            font-size: 10px;
+            line-height: 1.8;
+            text-align: center;
         }
 
         .sjs_footer_link {
-            color: var(--sjs_ink);
-            font-weight: 700;
-            text-decoration-color: #bdb4a5;
-            text-underline-offset: 3px;
+            color: #777777;
+            text-decoration: none;
+            border-bottom: 1px solid #cccccc;
         }
 
         .sjs_footer_link:hover {
             color: var(--sjs_red);
-            text-decoration-color: var(--sjs_red);
+            border-color: var(--sjs_red);
         }
 
-        @media (max-width: 640px) {
+        @media (max-width: 520px) {
             body {
-                padding: 12px 10px 26px;
-            }
-
-            .sjs_profile {
-                padding: 24px 20px 22px;
-            }
-
-            .sjs_profile_head {
-                gap: 16px;
-            }
-
-            .sjs_stamp {
-                width: 98px;
-                padding: 11px 8px 10px;
-            }
-
-            .sjs_stamp_initials {
-                font-size: 21px;
-            }
-
-            .sjs_title {
-                font-size: 31px;
-            }
-
-            .sjs_intro {
-                font-size: 12.5px;
-                line-height: 1.8;
-            }
-
-            .sjs_meta {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: 14px 18px;
-                margin-top: 22px;
-                padding: 16px 0;
-            }
-
-            .sjs_meta_item:last-child {
-                grid-column: 1 / -1;
-            }
-
-            .sjs_actions {
-                margin-top: 16px;
-            }
-
-            .sjs_link {
-                padding: 7px 11px;
-                font-size: 11.5px;
-            }
-
-            .sjs_work {
-                padding: 20px 16px 22px;
-            }
-
-            .sjs_work_head {
-                align-items: flex-start;
-                margin-bottom: 18px;
-            }
-
-            .sjs_work_hint {
-                font-size: 10.5px;
+                padding: 18px 14px 22px;
             }
 
             .sjs_tab {
@@ -535,194 +173,77 @@
             .sjs_dot {
                 margin-top: 10px;
             }
-
-            .sjs_footer {
-                padding-top: 14px;
-                font-size: 10.5px;
-            }
-        }
-
-        @media (max-width: 420px) {
-            .sjs_stamp {
-                display: none;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .sjs_link {
-                transition: none;
-            }
         }
     </style>
 </head>
 
 <body>
-    <div class="sjs_page">
-        <header class="sjs_profile" aria-labelledby="sjs_profile_title">
-            <div class="sjs_profile_head">
-                <div class="sjs_profile_copy">
-                    <p class="sjs_eyebrow"><span class="sjs_eyebrow_dot" aria-hidden="true"></span>高级网页设计 ·
-                        课堂实践 09</p>
-                    <h1 class="sjs_title" id="sjs_profile_title">旅游新闻选项卡</h1>
-                    <p class="sjs_intro">
-                        使用原生 HTML、CSS 与 JavaScript 还原新闻栏目的选项卡切换：三个栏目共用一套结构，
-                        点击标签即可切换内容，默认展示「最新投诉」。
-                    </p>
-                </div>
-                <div class="sjs_stamp" aria-hidden="true">
-                    <span class="sjs_stamp_initials">SJS</span>
-                    <span class="sjs_stamp_line"></span>
-                    <span class="sjs_stamp_no">24001011009</span>
-                </div>
-            </div>
+    <!-- 选项卡组件：data-sjs-tabs 标记容器，按钮与面板通过 data-sjs-tab / data-sjs-panel 对应 -->
+    <main class="sjs_news" data-sjs-tabs>
+        <!-- 栏目标签 -->
+        <div class="sjs_tablist" role="tablist" aria-label="新闻栏目">
+            <button class="sjs_tab sjs_is_active" type="button" role="tab" id="sjs_tab_latest" aria-selected="true"
+                aria-controls="sjs_panel_latest" data-sjs-tab="latest">最新投诉</button>
+            <button class="sjs_tab" type="button" role="tab" id="sjs_tab_reply" aria-selected="false"
+                aria-controls="sjs_panel_reply" data-sjs-tab="reply" tabindex="-1">官方回应</button>
+            <button class="sjs_tab" type="button" role="tab" id="sjs_tab_track" aria-selected="false"
+                aria-controls="sjs_panel_track" data-sjs-tab="track" tabindex="-1">追踪调查</button>
+        </div>
 
-            <dl class="sjs_meta">
-                <div class="sjs_meta_item">
-                    <dt class="sjs_meta_label">姓名</dt>
-                    <dd class="sjs_meta_value">申家硕</dd>
-                </div>
-                <div class="sjs_meta_item">
-                    <dt class="sjs_meta_label">学号</dt>
-                    <dd class="sjs_meta_value">24001011009</dd>
-                </div>
-                <div class="sjs_meta_item">
-                    <dt class="sjs_meta_label">课程</dt>
-                    <dd class="sjs_meta_value">高级网页设计</dd>
-                </div>
-            </dl>
-
-            <div class="sjs_actions">
-                <nav class="sjs_links" aria-label="项目源码">
-                    <a class="sjs_link sjs_link_primary" href="https://github.com/sjs729/shenjiashuo-class-test-9"
-                        target="_blank" rel="noopener noreferrer">
-                        项目源码
-                        <span class="sjs_link_arrow" aria-hidden="true">↗</span>
-                    </a>
-                    <a class="sjs_link"
-                        href="https://github.com/sjs729/shenjiashuo-class-test-9/blob/main/index.html"
-                        target="_blank" rel="noopener noreferrer">index.html</a>
-                    <a class="sjs_link"
-                        href="https://github.com/sjs729/shenjiashuo-class-test-9/blob/main/js/news-tab.js"
-                        target="_blank" rel="noopener noreferrer">news-tab.js</a>
-                    <a class="sjs_link"
-                        href="https://github.com/sjs729/shenjiashuo-class-test-9/blob/main/README.md"
-                        target="_blank" rel="noopener noreferrer">README</a>
-                </nav>
-            </div>
-
-            <ul class="sjs_rules" aria-label="作业要求对照">
-                <li class="sjs_rule">
-                    <span class="sjs_check" aria-hidden="true">✓</span>
-                    <span>命名规范：所有 CSS 类名、id、JS 变量均以 <code class="sjs_code">sjs_</code> 开头。</span>
-                </li>
-                <li class="sjs_rule">
-                    <span class="sjs_check" aria-hidden="true">✓</span>
-                    <span>脚本外链：JavaScript 独立存放于 <code class="sjs_code">js/news-tab.js</code>，由页面外部引用。</span>
-                </li>
-                <li class="sjs_rule">
-                    <span class="sjs_check" aria-hidden="true">✓</span>
-                    <span>源码公开：GitHub 仓库名包含姓名全拼 <code class="sjs_code">shenjiashuo</code>。</span>
-                </li>
+        <!-- 最新投诉（默认显示） -->
+        <section class="sjs_panel sjs_is_active" id="sjs_panel_latest" role="tabpanel" aria-labelledby="sjs_tab_latest"
+            data-sjs-panel="latest">
+            <ul class="sjs_list">
+                <li><span class="sjs_dot" aria-hidden="true"></span><span>北京火车站出租车乱象调查　的哥称计价器坏了</span></li>
+                <li><span class="sjs_dot" aria-hidden="true"></span><span>公园仙人掌遭刻字“毁容”　一棵仙人掌被刻满字</span></li>
+                <li><span class="sjs_dot" aria-hidden="true"></span><span>昆明屡现游客“辣手摧鸽”　网友谴责（组图）</span></li>
+                <li><span class="sjs_dot" aria-hidden="true"></span><span>四川一星级公厕开建1年未开放变“茶楼”</span></li>
+                <li><span class="sjs_dot" aria-hidden="true"></span><span>北京北海地坛公园暗藏高端会所　园方称“曝光也没用”</span></li>
+                <li><span class="sjs_dot" aria-hidden="true"></span><span>北京北海金丝楠木柱遭英文字母“签名”破坏</span></li>
+                <li><span class="sjs_dot" aria-hidden="true"></span><span>北京动物园门票玩猫腻　低价门票遭“雪藏”</span></li>
+                <li><span class="sjs_dot" aria-hidden="true"></span><span>女子不满“无购物”投诉旅行社　称东西一样没买</span></li>
+                <li><span class="sjs_dot" aria-hidden="true"></span><span>老年人参团游权益易受损　旅行社被曝对老人“设限”</span></li>
             </ul>
-        </header>
+        </section>
 
-        <main class="sjs_work">
-            <div class="sjs_work_head">
-                <div>
-                    <p class="sjs_work_kicker">LIVE DEMO</p>
-                    <h2 class="sjs_work_title">新闻栏目演示</h2>
-                </div>
-                <p class="sjs_work_hint">点击标签切换栏目</p>
-            </div>
+        <!-- 官方回应 -->
+        <section class="sjs_panel" id="sjs_panel_reply" role="tabpanel" aria-labelledby="sjs_tab_reply"
+            data-sjs-panel="reply" hidden>
+            <ul class="sjs_list">
+                <li><span class="sjs_dot" aria-hidden="true"></span><span>大绿鸭、翘尾鸭引热议　法官解读“山寨鸭”是否侵权</span></li>
+                <li><span class="sjs_dot" aria-hidden="true"></span><span>国家旅游局回应涨价：“团队游价格系正常”</span></li>
+                <li><span class="sjs_dot" aria-hidden="true"></span><span>国家旅游局回应“新旅游法实施后旅行社团队游涨价”</span></li>
+                <li><span class="sjs_dot" aria-hidden="true"></span><span>出游遇纠纷可依《旅游法》维权　明确旅游投诉渠道</span></li>
+                <li><span class="sjs_dot" aria-hidden="true"></span><span>解读新旅游法三“谣传”　扫货族可安心</span></li>
+                <li><span class="sjs_dot" aria-hidden="true"></span><span>《旅游法》将抑制“零负团费”和“门票经济”</span></li>
+                <li><span class="sjs_dot" aria-hidden="true"></span><span>文明旅游将入旅游合同　行为指南和公约将作为附件</span></li>
+                <li><span class="sjs_dot" aria-hidden="true"></span><span>天津二季度旅行社服务质量发布　投诉涉及82家</span></li>
+                <li><span class="sjs_dot" aria-hidden="true"></span><span>敦煌：国家法定节假日所有景点景区免收停车费</span></li>
+            </ul>
+        </section>
 
-            <!-- 选项卡组件：data-sjs-tabs 标记容器，按钮与面板通过 data-sjs-tab / data-sjs-panel 对应 -->
-            <div class="sjs_news" data-sjs-tabs>
-                <!-- 栏目标签 -->
-                <div class="sjs_tablist" role="tablist" aria-label="新闻栏目">
-                    <button class="sjs_tab sjs_is_active" type="button" role="tab" id="sjs_tab_latest"
-                        aria-selected="true" aria-controls="sjs_panel_latest" data-sjs-tab="latest">最新投诉</button>
-                    <button class="sjs_tab" type="button" role="tab" id="sjs_tab_reply" aria-selected="false"
-                        aria-controls="sjs_panel_reply" data-sjs-tab="reply" tabindex="-1">官方回应</button>
-                    <button class="sjs_tab" type="button" role="tab" id="sjs_tab_track" aria-selected="false"
-                        aria-controls="sjs_panel_track" data-sjs-tab="track" tabindex="-1">追踪调查</button>
-                </div>
+        <!-- 追踪调查 -->
+        <section class="sjs_panel" id="sjs_panel_track" role="tabpanel" aria-labelledby="sjs_tab_track"
+            data-sjs-panel="track" hidden>
+            <ul class="sjs_list">
+                <li><span class="sjs_dot" aria-hidden="true"></span><span>《旅游法》实施半月　自费景区遭“正规一日游”绕道</span></li>
+                <li><span class="sjs_dot" aria-hidden="true"></span><span>追踪香格里拉旅游“怪象”：涉事导游等已被处理</span></li>
+                <li><span class="sjs_dot" aria-hidden="true"></span><span>导游挣钱新“攻略”：逃离旅行社自己接团</span></li>
+                <li><span class="sjs_dot" aria-hidden="true"></span><span>九寨沟为何变成“死胡同”？——数千游客滞留</span></li>
+                <li><span class="sjs_dot" aria-hidden="true"></span><span>九寨沟为何仍现游客滞留？</span></li>
+                <li><span class="sjs_dot" aria-hidden="true"></span><span>旅游之尴尬：“膀爷”游博物馆、女士超性感进景区</span></li>
+                <li><span class="sjs_dot" aria-hidden="true"></span><span>记者暗访兵马俑景区：玉器店买玉　过期门票转卖</span></li>
+                <li><span class="sjs_dot" aria-hidden="true"></span><span>假冒香港游客借卡转账　两女子忽悠女大学生</span></li>
+                <li><span class="sjs_dot" aria-hidden="true"></span><span>39家旅游单位违法被罚1800万　购物店结盟统一售价</span></li>
+            </ul>
+        </section>
+    </main>
 
-                <!-- 最新投诉（默认显示） -->
-                <section class="sjs_panel sjs_is_active" id="sjs_panel_latest" role="tabpanel"
-                    aria-labelledby="sjs_tab_latest" data-sjs-panel="latest">
-                    <ul class="sjs_list">
-                        <li><span class="sjs_dot" aria-hidden="true"></span><span>北京火车站出租车乱象调查　的哥称计价器坏了</span>
-                        </li>
-                        <li><span class="sjs_dot" aria-hidden="true"></span><span>公园仙人掌遭刻字“毁容”　一棵仙人掌被刻满字</span>
-                        </li>
-                        <li><span class="sjs_dot" aria-hidden="true"></span><span>昆明屡现游客“辣手摧鸽”　网友谴责（组图）</span></li>
-                        <li><span class="sjs_dot" aria-hidden="true"></span><span>四川一星级公厕开建1年未开放变“茶楼”</span></li>
-                        <li><span class="sjs_dot" aria-hidden="true"></span><span>北京北海地坛公园暗藏高端会所　园方称“曝光也没用”</span>
-                        </li>
-                        <li><span class="sjs_dot" aria-hidden="true"></span><span>北京北海金丝楠木柱遭英文字母“签名”破坏</span></li>
-                        <li><span class="sjs_dot" aria-hidden="true"></span><span>北京动物园门票玩猫腻　低价门票遭“雪藏”</span></li>
-                        <li><span class="sjs_dot" aria-hidden="true"></span><span>女子不满“无购物”投诉旅行社　称东西一样没买</span>
-                        </li>
-                        <li><span class="sjs_dot" aria-hidden="true"></span><span>老年人参团游权益易受损　旅行社被曝对老人“设限”</span>
-                        </li>
-                    </ul>
-                </section>
-
-                <!-- 官方回应 -->
-                <section class="sjs_panel" id="sjs_panel_reply" role="tabpanel" aria-labelledby="sjs_tab_reply"
-                    data-sjs-panel="reply" hidden>
-                    <ul class="sjs_list">
-                        <li><span class="sjs_dot" aria-hidden="true"></span><span>大绿鸭、翘尾鸭引热议　法官解读“山寨鸭”是否侵权</span>
-                        </li>
-                        <li><span class="sjs_dot" aria-hidden="true"></span><span>国家旅游局回应涨价：“团队游价格系正常”</span></li>
-                        <li><span class="sjs_dot" aria-hidden="true"></span><span>国家旅游局回应“新旅游法实施后旅行社团队游涨价”</span>
-                        </li>
-                        <li><span class="sjs_dot" aria-hidden="true"></span><span>出游遇纠纷可依《旅游法》维权　明确旅游投诉渠道</span>
-                        </li>
-                        <li><span class="sjs_dot" aria-hidden="true"></span><span>解读新旅游法三“谣传”　扫货族可安心</span></li>
-                        <li><span class="sjs_dot" aria-hidden="true"></span><span>《旅游法》将抑制“零负团费”和“门票经济”</span></li>
-                        <li><span class="sjs_dot" aria-hidden="true"></span><span>文明旅游将入旅游合同　行为指南和公约将作为附件</span>
-                        </li>
-                        <li><span class="sjs_dot" aria-hidden="true"></span><span>天津二季度旅行社服务质量发布　投诉涉及82家</span></li>
-                        <li><span class="sjs_dot" aria-hidden="true"></span><span>敦煌：国家法定节假日所有景点景区免收停车费</span></li>
-                    </ul>
-                </section>
-
-                <!-- 追踪调查 -->
-                <section class="sjs_panel" id="sjs_panel_track" role="tabpanel" aria-labelledby="sjs_tab_track"
-                    data-sjs-panel="track" hidden>
-                    <ul class="sjs_list">
-                        <li><span class="sjs_dot" aria-hidden="true"></span><span>《旅游法》实施半月　自费景区遭“正规一日游”绕道</span>
-                        </li>
-                        <li><span class="sjs_dot" aria-hidden="true"></span><span>追踪香格里拉旅游“怪象”：涉事导游等已被处理</span>
-                        </li>
-                        <li><span class="sjs_dot" aria-hidden="true"></span><span>导游挣钱新“攻略”：逃离旅行社自己接团</span></li>
-                        <li><span class="sjs_dot" aria-hidden="true"></span><span>九寨沟为何变成“死胡同”？——数千游客滞留</span></li>
-                        <li><span class="sjs_dot" aria-hidden="true"></span><span>九寨沟为何仍现游客滞留？</span></li>
-                        <li><span class="sjs_dot" aria-hidden="true"></span><span>旅游之尴尬：“膀爷”游博物馆、女士超性感进景区</span>
-                        </li>
-                        <li><span class="sjs_dot" aria-hidden="true"></span><span>记者暗访兵马俑景区：玉器店买玉　过期门票转卖</span>
-                        </li>
-                        <li><span class="sjs_dot" aria-hidden="true"></span><span>假冒香港游客借卡转账　两女子忽悠女大学生</span></li>
-                        <li><span class="sjs_dot" aria-hidden="true"></span><span>39家旅游单位违法被罚1800万　购物店结盟统一售价</span>
-                        </li>
-                    </ul>
-                </section>
-            </div>
-        </main>
-
-        <footer class="sjs_footer">
-            <p>申家硕 · 24001011009 · 高级网页设计课堂实践</p>
-            <p>
-                发布于
-                <a class="sjs_footer_link" href="https://sjs729.github.io/shenjiashuo-class-test-9/"
-                    target="_blank" rel="noopener noreferrer">GitHub Pages</a>
-                · 源码托管于
-                <a class="sjs_footer_link" href="https://github.com/sjs729/shenjiashuo-class-test-9"
-                    target="_blank" rel="noopener noreferrer">GitHub</a>
-            </p>
-        </footer>
-    </div>
+    <footer class="sjs_footer">
+        申家硕 · 24001011009 · 高级网页设计 ·
+        <a class="sjs_footer_link" href="https://github.com/sjs729/shenjiashuo-class-test-9" target="_blank"
+            rel="noopener noreferrer">查看源码</a>
+    </footer>
 
     <script src="js/news-tab.js"></script>
 </body>
