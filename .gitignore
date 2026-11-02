@@ -1,0 +1,8 @@
+.DS_Store
+Thumbs.db
+
+# 课堂题目参考图，不参与页面发布
+/1.jpg
+/2.jpg
+/3.jpg
+/*.txt
